@@ -48,8 +48,70 @@ const TEXT_SELECTORS = [
 ];
 
 function usage() {
-  console.error("Usage: npm run render -- <report.html> <output-dir>");
+  console.error(
+    [
+      "Usage: npm run render -- <report.html> <output-dir> [options]",
+      "",
+      "Options:",
+      "  --viewport=1280x720        Render viewport in pixels.",
+      "  --output-name=name         Output basename. Defaults to the HTML filename.",
+      "  --slide-selector=.slide    Selector for fixed-size slide pages.",
+      "  --vector-only              Write only the Chromium vector PDF and QA JSON.",
+      "  --help                     Show this help.",
+    ].join("\n")
+  );
   process.exit(1);
+}
+
+function parseArgs(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) usage();
+
+  const positional = [];
+  const options = {
+    viewport: DEFAULT_VIEWPORT,
+    outputName: null,
+    slideSelector: ".slide",
+    vectorOnly: false,
+  };
+
+  for (const arg of argv) {
+    if (!arg.startsWith("--")) {
+      positional.push(arg);
+      continue;
+    }
+
+    const [key, rawValue] = arg.split("=", 2);
+    if (key === "--vector-only") {
+      options.vectorOnly = true;
+    } else if (key === "--viewport") {
+      options.viewport = parseViewport(rawValue);
+    } else if (key === "--output-name") {
+      if (!rawValue || !/^[a-zA-Z0-9._-]+$/.test(rawValue)) {
+        throw new Error("--output-name must use only letters, numbers, dots, underscores, or hyphens.");
+      }
+      options.outputName = rawValue;
+    } else if (key === "--slide-selector") {
+      if (!rawValue) throw new Error("--slide-selector requires a CSS selector value.");
+      options.slideSelector = rawValue;
+    } else {
+      throw new Error(`Unknown option: ${key}`);
+    }
+  }
+
+  if (positional.length !== 2) usage();
+  return { htmlArg: positional[0], outArg: positional[1], options };
+}
+
+function parseViewport(value) {
+  if (!value) throw new Error("--viewport requires WIDTHxHEIGHT, for example 1280x720.");
+  const match = value.match(/^(\d{3,5})x(\d{3,5})$/i);
+  if (!match) throw new Error("--viewport must look like 1280x720.");
+  const width = Number.parseInt(match[1], 10);
+  const height = Number.parseInt(match[2], 10);
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width < 320 || height < 240) {
+    throw new Error("--viewport is too small or invalid.");
+  }
+  return { width, height };
 }
 
 function ensureDir(dir) {
@@ -70,8 +132,8 @@ function findBrowserExecutable() {
   return candidates.find((candidate) => fs.existsSync(candidate));
 }
 
-async function collectOverflowIssues(page) {
-  return page.evaluate((selectors) => {
+async function collectOverflowIssues(page, slideSelector) {
+  return page.evaluate(({ selectors, slideSelector }) => {
     const nodes = selectors.flatMap((sel) =>
       Array.from(document.querySelectorAll(sel)).map((el) => ({ sel, el }))
     );
@@ -79,7 +141,7 @@ async function collectOverflowIssues(page) {
 
     for (const { sel, el } of nodes) {
       const r = el.getBoundingClientRect();
-      const slide = el.closest(".slide");
+      const slide = el.closest(slideSelector);
       const sr = slide ? slide.getBoundingClientRect() : null;
       const overflowX = el.scrollWidth > el.clientWidth + 1;
       const overflowY = el.scrollHeight > el.clientHeight + 1;
@@ -110,12 +172,12 @@ async function collectOverflowIssues(page) {
     }
 
     return result;
-  }, DEFAULT_SELECTORS);
+  }, { selectors: DEFAULT_SELECTORS, slideSelector });
 }
 
-async function collectContentVisibilityIssues(page) {
-  return page.evaluate((textSelectors) => {
-    const slides = Array.from(document.querySelectorAll(".slide"));
+async function collectContentVisibilityIssues(page, slideSelector) {
+  return page.evaluate(({ textSelectors, slideSelector }) => {
+    const slides = Array.from(document.querySelectorAll(slideSelector));
     const issues = [];
 
     function textColorAlpha(style) {
@@ -205,7 +267,7 @@ async function collectContentVisibilityIssues(page) {
     });
 
     return issues;
-  }, TEXT_SELECTORS);
+  }, { textSelectors: TEXT_SELECTORS, slideSelector });
 }
 
 async function collectImageContentIssues(imagePaths) {
@@ -297,9 +359,7 @@ async function makeImagePdf(imagePaths, outPath, viewport) {
 }
 
 async function main() {
-  const htmlArg = process.argv[2];
-  const outArg = process.argv[3];
-  if (!htmlArg || !outArg) usage();
+  const { htmlArg, outArg, options } = parseArgs(process.argv.slice(2));
 
   const htmlPath = path.resolve(htmlArg);
   const outDir = path.resolve(outArg);
@@ -317,55 +377,59 @@ async function main() {
 
   const browser = await chromium.launch(launchOptions);
   const page = await browser.newPage({
-    viewport: DEFAULT_VIEWPORT,
+    viewport: options.viewport,
     deviceScaleFactor: 2,
   });
 
   await page.goto(`file://${htmlPath}`, { waitUntil: "networkidle" });
   await page.emulateMedia({ media: "screen" });
 
-  const slideCount = await page.$$eval(".slide", (slides) => slides.length).catch(() => 0);
-  const issues = await collectOverflowIssues(page);
-  const contentVisibilityIssues = await collectContentVisibilityIssues(page);
-  const baseName = path.basename(htmlPath, path.extname(htmlPath));
+  const slideCount = await page.$$eval(options.slideSelector, (slides) => slides.length).catch(() => 0);
+  const issues = await collectOverflowIssues(page, options.slideSelector);
+  const contentVisibilityIssues = await collectContentVisibilityIssues(page, options.slideSelector);
+  const baseName = options.outputName || path.basename(htmlPath, path.extname(htmlPath));
   const pdfPath = path.join(outDir, `${baseName}.pdf`);
   const vectorPdfPath = path.join(outDir, `${baseName}-vector.pdf`);
   await page.pdf({
     path: vectorPdfPath,
-    width: `${DEFAULT_VIEWPORT.width}px`,
-    height: `${DEFAULT_VIEWPORT.height}px`,
+    width: `${options.viewport.width}px`,
+    height: `${options.viewport.height}px`,
     printBackground: true,
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
   });
 
   const imagePaths = [];
-  if (slideCount > 0) {
-    const slides = await page.$$(".slide");
+  if (!options.vectorOnly && slideCount > 0) {
+    const slides = await page.$$(options.slideSelector);
     for (let i = 0; i < slides.length; i += 1) {
       const imagePath = path.join(previewDir, `page-${String(i + 1).padStart(2, "0")}.png`);
       await slides[i].screenshot({ path: imagePath });
       imagePaths.push(imagePath);
     }
-  } else {
+  } else if (!options.vectorOnly) {
     const imagePath = path.join(previewDir, "page-01.png");
     await page.screenshot({ path: imagePath, fullPage: true });
     imagePaths.push(imagePath);
   }
 
   const montagePath = path.join(outDir, "montage.png");
-  await makeMontage(imagePaths, montagePath);
-  const imageContentIssues = await collectImageContentIssues(imagePaths);
-  await makeImagePdf(imagePaths, pdfPath, DEFAULT_VIEWPORT);
+  const resolvedMontagePath = options.vectorOnly ? null : await makeMontage(imagePaths, montagePath);
+  const imageContentIssues = options.vectorOnly ? [] : await collectImageContentIssues(imagePaths);
+  const resolvedPdfPath = options.vectorOnly ? null : await makeImagePdf(imagePaths, pdfPath, options.viewport);
 
   const qa = {
     source_html: htmlPath,
-    output_pdf: pdfPath,
+    output_pdf: resolvedPdfPath,
     output_vector_pdf: vectorPdfPath,
     pdf_strategy:
-      "default output_pdf is image-safe PDF built from verified screenshots; vector PDF is auxiliary",
-    montage: montagePath,
+      options.vectorOnly
+        ? "vector-only mode; output_pdf is null and vector PDF is the primary artifact"
+        : "default output_pdf is image-safe PDF built from verified screenshots; vector PDF is auxiliary",
+    montage: resolvedMontagePath,
     slides: slideCount || 1,
-    viewport: DEFAULT_VIEWPORT,
+    viewport: options.viewport,
+    slide_selector: options.slideSelector,
+    vector_only: options.vectorOnly,
     browser_executable: executablePath || "playwright-managed",
     overflow_issue_count: issues.length,
     content_visibility_issue_count: contentVisibilityIssues.length,
@@ -382,10 +446,10 @@ async function main() {
   console.log(
     JSON.stringify(
       {
-        pdfPath,
+        pdfPath: resolvedPdfPath,
         vectorPdfPath,
         qaPath,
-        montagePath,
+        montagePath: resolvedMontagePath,
         overflow_issues: issues.length,
         content_visibility_issues: contentVisibilityIssues.length,
         image_content_issues: imageContentIssues.length,

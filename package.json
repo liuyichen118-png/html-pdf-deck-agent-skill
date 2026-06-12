@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Agent skill for polished HTML/CSS decks with CJK-safe PDF export and screenshot QA.",
   "main": "scripts/render-report.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "render": "node scripts/render-report.js",
     "validate:skill": "node scripts/validate-skill.js",
@@ -25,7 +25,7 @@
     "cjk"
   ],
   "author": "61X-Studio",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "jszip": "^3.10.1",

@@ -6,7 +6,7 @@ It is designed for customer-facing reports, proposal decks, requirements-confirm
 
 [中文说明](README.zh-CN.md) | [Compatibility](docs/COMPATIBILITY.md) | [Project positioning](docs/PROJECT_POSITIONING.md) | [CJK PDF safety](docs/CJK_PDF_SAFETY.md)
 
-> Status: private release candidate. Public release still requires owner approval and a license decision.
+> Status: public `v0.1.0` release. Author: `61X-Studio`. License: MIT.
 
 ## What This Skill Does
 
@@ -84,6 +84,24 @@ npm run demo:all
 npm run render -- /absolute/path/report.html /absolute/path/output-dir
 ```
 
+CLI options:
+
+```bash
+node scripts/render-report.js examples/smoke-report.html outputs/custom \
+  --viewport=1280x720 \
+  --output-name=custom-smoke \
+  --slide-selector=.slide
+```
+
+Useful options:
+
+| Option | Purpose |
+|---|---|
+| `--viewport=1280x720` | Set the render canvas in pixels. |
+| `--output-name=name` | Override the output basename. |
+| `--slide-selector=.slide` | Use a custom selector for fixed-size slide pages. |
+| `--vector-only` | Export only Chromium's vector PDF plus `qa.json`; useful for debugging. |
+
 ## HTML Contract
 
 Use one `.slide` element per page.
@@ -135,18 +153,17 @@ Always inspect `montage.png`. For Chinese/CJK decks, also render the final `<nam
 - `examples/operations-dashboard.html`: dense dashboard/status report.
 - `examples/cjk-smoke-report.html`: CJK export safety test.
 
-## Public Release Checklist
+## Release Checklist
 
 See `OPEN_SOURCE_PREP_CHECKLIST.md`.
 
-Before making this repository public:
+Before a new public release:
 
-- choose a license.
-- confirm `61X-Studio` as author or replace it.
+- run smoke and CJK smoke tests.
+- run dependency audit.
 - run secret/private-path scans.
-- run GitHub Actions in a private repo.
 - review README rendering and demo images on GitHub.
 
 ## License
 
-No public license has been granted yet. The project remains private until the owner explicitly approves public release and chooses a license.
+MIT. See `LICENSE`.

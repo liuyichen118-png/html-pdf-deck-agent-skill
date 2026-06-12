@@ -1,6 +1,6 @@
 # Open Source Prep Checklist
 
-Status: private draft. Do not publish until every required item is resolved and the owner explicitly approves public release.
+Status: public release approved by owner on 2026-06-12. Use this file as the release checklist for future versions.
 
 ## Required Before GitHub Public Release
 
@@ -9,9 +9,9 @@ Status: private draft. Do not publish until every required item is resolved and 
 - [x] Decide final repo name: `html-pdf-deck-agent-skill`.
 - [x] Decide package name: `html-pdf-deck-agent-skill`.
 - [x] Decide skill trigger name: `html-pdf-deck`.
-- [ ] Decide whether to keep `61X-Studio` as author.
-- [ ] Decide license.
-- [ ] Confirm repository visibility: start private, switch public only after final approval.
+- [x] Decide whether to keep `61X-Studio` as author.
+- [x] Decide license.
+- [x] Confirm repository visibility: public release approved by owner.
 
 ### 2. README And Positioning
 
@@ -38,23 +38,23 @@ Status: private draft. Do not publish until every required item is resolved and 
 
 ### 4. Code Quality
 
-- [ ] Add CLI options for viewport, output name, selectors, and vector-only/debug mode.
-- [ ] Keep defaults safe for Chinese/CJK delivery.
+- [x] Add CLI options for viewport, output name, selectors, and vector-only/debug mode.
+- [x] Keep defaults safe for Chinese/CJK delivery.
 - [ ] Add structured errors for missing files, empty slides, browser launch failures, and PDF write failures.
 - [ ] Add tests for regular smoke and CJK smoke.
-- [ ] Add a CI workflow that runs smoke tests and dependency audit.
+- [x] Add a CI workflow that runs smoke tests and dependency audit.
 
 ### 5. Security And Privacy
 
-- [ ] Scan for secrets, tokens, account IDs, private paths, private customer names, and internal project names.
+- [x] Scan for secrets, tokens, account IDs, private paths, private customer names, and internal project names.
 - [ ] Exclude `outputs/`, `node_modules/`, and generated artifacts from Git.
-- [ ] Remove private extraction wording from public README before release.
+- [x] Remove private extraction wording from public README before release.
 - [ ] Confirm examples contain only generic demo content.
-- [ ] Confirm no private 61X customer materials are included.
+- [x] Confirm no private 61X customer materials are included.
 
 ### 6. Legal And Maintenance
 
-- [ ] Pick a license after owner approval.
+- [x] Pick a license after owner approval.
 - [ ] Add `CONTRIBUTING.md` if outside contributions are welcome.
 - [ ] Add `SECURITY.md` for vulnerability reports.
 - [ ] Add `CODE_OF_CONDUCT.md` only if the project is intended to accept community participation.
@@ -62,12 +62,12 @@ Status: private draft. Do not publish until every required item is resolved and 
 
 ### 7. GitHub Repository Setup
 
-- [ ] Create GitHub repo as private first.
-- [ ] Push local main branch.
+- [x] Create GitHub repo.
+- [x] Push local main branch.
 - [ ] Enable GitHub Actions.
 - [ ] Confirm CI passes in GitHub, not only locally.
 - [ ] Review README rendering on GitHub.
-- [ ] Switch to public only after explicit owner approval.
+- [x] Switch to public only after explicit owner approval.
 
 ## Recommended Public Release Files
 
@@ -87,6 +87,6 @@ package-lock.json
 
 ## Current Release Decision
 
-Not ready for public release yet.
+Public release approved.
 
-Best next step: keep the repo private, clean the public-facing README, decide the license, and run one GitHub private CI pass before considering public visibility.
+Best next step: wait for GitHub Actions to finish and fix any remote-only CI issue if it appears.
