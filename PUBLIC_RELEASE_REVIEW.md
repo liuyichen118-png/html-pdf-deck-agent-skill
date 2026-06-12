@@ -9,6 +9,8 @@ This package was approved for public release by the owner on 2026-06-12.
 - Publish as `html-pdf-deck-agent-skill`.
 - Keep author as `61X-Studio`.
 - Use MIT license.
+- Public repository: https://github.com/liuyichen118-png/html-pdf-deck-agent-skill
+- Release: https://github.com/liuyichen118-png/html-pdf-deck-agent-skill/releases/tag/v0.1.0
 
 ## Checks Completed Locally
 
@@ -25,6 +27,7 @@ This package was approved for public release by the owner on 2026-06-12.
 | CJK Quick Look preview | Pass | Chinese text visible in generated preview PNG |
 | Chromium vector PDF CJK risk reproduced | Confirmed | `outputs/cjk-smoke/cjk-smoke-report-vector.pdf` rendered without Chinese text in Quick Look |
 | High-severity npm audit | Pass | `npm_config_registry=https://registry.npmjs.org npm audit --audit-level=high` found 0 vulnerabilities |
+| GitHub Actions CI | Pass | `quality` workflow passed on public `main` |
 
 ## Known Follow-Up Tasks
 
