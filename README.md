@@ -4,6 +4,8 @@ An Agent Skill for creating polished fixed-layout HTML/CSS presentation decks an
 
 It is designed for customer-facing reports, proposal decks, requirements-confirmation decks, diagnostic reports, and PDF-first slide deliverables where the final file must look exactly right.
 
+[中文说明](README.zh-CN.md) | [Project positioning](docs/PROJECT_POSITIONING.md) | [CJK PDF safety](docs/CJK_PDF_SAFETY.md)
+
 > Status: private release candidate. Public release still requires owner approval and a license decision.
 
 ## What This Skill Does

@@ -6,8 +6,9 @@ Status: private draft. Do not publish until every required item is resolved and 
 
 ### 1. Repository Identity
 
-- [ ] Decide final repo name.
-- [ ] Decide package name.
+- [x] Decide final repo name: `html-pdf-deck-agent-skill`.
+- [x] Decide package name: `html-pdf-deck-agent-skill`.
+- [x] Decide skill trigger name: `html-pdf-deck`.
 - [ ] Decide whether to keep `61X-Studio` as author.
 - [ ] Decide license.
 - [ ] Confirm repository visibility: start private, switch public only after final approval.
@@ -21,6 +22,9 @@ Status: private draft. Do not publish until every required item is resolved and 
 - [ ] Add a minimal HTML example.
 - [ ] Add output file examples.
 - [ ] Add screenshots or a small montage image.
+- [x] Add English primary README.
+- [x] Add Chinese README: `README.zh-CN.md`.
+- [x] Add project positioning and naming document: `docs/PROJECT_POSITIONING.md`.
 
 ### 3. Real Usage Documentation
 
