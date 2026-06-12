@@ -12,13 +12,13 @@ Every render produces two PDFs:
 
 ```text
 report.pdf
-report-image.pdf
+report-vector.pdf
 ```
 
-- `report.pdf` is the Chromium vector PDF.
-- `report-image.pdf` is rebuilt from verified per-page PNG screenshots.
+- `report.pdf` is rebuilt from verified per-page PNG screenshots and is the default final output.
+- `report-vector.pdf` is the Chromium vector PDF and is auxiliary/debug output.
 
-Use `*-image.pdf` when visual fidelity matters more than selectable text.
+Use `report.pdf` when visual fidelity matters more than selectable text.
 
 ## Required Test
 
@@ -32,7 +32,7 @@ The test must produce:
 
 ```text
 outputs/cjk-smoke/cjk-smoke-report.pdf
-outputs/cjk-smoke/cjk-smoke-report-image.pdf
+outputs/cjk-smoke/cjk-smoke-report-vector.pdf
 outputs/cjk-smoke/montage.png
 outputs/cjk-smoke/qa.json
 ```
@@ -54,10 +54,10 @@ Inspect `montage.png`. CJK text must be visible on every page.
 On macOS, Quick Look can also be used as a practical compatibility check:
 
 ```bash
-qlmanage -t -s 1280 -o outputs/cjk-smoke/ql-preview outputs/cjk-smoke/cjk-smoke-report-image.pdf
+qlmanage -t -s 1280 -o outputs/cjk-smoke/ql-preview outputs/cjk-smoke/cjk-smoke-report.pdf
 ```
 
-The generated preview PNG should show the Chinese title and body text.
+The generated preview PNG should show the Chinese title and body text. If `*-vector.pdf` drops Chinese text, do not use it as the final deliverable.
 
 ## Tradeoff
 

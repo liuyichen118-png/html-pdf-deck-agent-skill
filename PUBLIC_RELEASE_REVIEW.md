@@ -16,8 +16,9 @@ This package is not approved for public release yet.
 |---|---|---|
 | Regular smoke render | Pass | `npm run smoke` |
 | CJK smoke render | Pass | `npm run smoke:cjk` |
-| CJK image PDF generated | Pass | `outputs/cjk-smoke/cjk-smoke-report-image.pdf` |
+| CJK final PDF generated | Pass | `outputs/cjk-smoke/cjk-smoke-report.pdf` |
 | CJK Quick Look preview | Pass | Chinese text visible in generated preview PNG |
+| Chromium vector PDF CJK risk reproduced | Confirmed | `outputs/cjk-smoke/cjk-smoke-report-vector.pdf` rendered without Chinese text in Quick Look |
 | High-severity npm audit | Pass | `npm_config_registry=https://registry.npmjs.org npm audit --audit-level=high` found 0 vulnerabilities |
 
 ## Known Public-Release Tasks

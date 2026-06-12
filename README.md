@@ -8,13 +8,13 @@ This repository is not public-release-ready yet. It is private by default until 
 
 The pipeline renders slide-style HTML locally and produces:
 
-- a vector PDF from Chromium;
-- a CJK-safe image PDF built from verified page screenshots;
+- a CJK-safe final PDF built from verified page screenshots;
+- an auxiliary vector PDF from Chromium;
 - per-page PNG previews;
 - a montage/contact sheet;
 - `qa.json` with overflow, visible-content, and low-image-content checks.
 
-The image PDF exists because some PDF viewers can drop or hide Chinese/CJK text from vector PDFs even when the HTML and screenshots render correctly. For delivery where visual fidelity matters, use the `*-image.pdf` output.
+The image-safe final PDF exists because some PDF viewers can drop or hide Chinese/CJK text from Chromium vector PDFs even when the HTML and screenshots render correctly. For delivery where visual fidelity matters, use the default `<name>.pdf` output.
 
 ## Commands
 
@@ -55,8 +55,8 @@ Default canvas:
 For `report.html`, the output directory contains:
 
 ```text
-report.pdf          # Chromium vector PDF
-report-image.pdf    # screenshot-packed image PDF, safer for CJK visual fidelity
+report.pdf          # screenshot-packed final PDF, safer for CJK visual fidelity
+report-vector.pdf   # Chromium vector PDF, auxiliary/debug output
 preview/page-01.png
 preview/page-02.png
 montage.png
@@ -78,7 +78,7 @@ For Chinese, Japanese, Korean, or any deck where missing glyphs are unacceptable
 1. Use font stacks that include available CJK fonts.
 2. Render the deck.
 3. Inspect `montage.png`.
-4. Use `*-image.pdf` as the final visual PDF when viewer compatibility matters.
+4. Use the default `<name>.pdf` as the final visual PDF.
 
 This turns the previous manual "Chinese disappeared in PDF preview" fix into a standard pipeline output.
 

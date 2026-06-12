@@ -327,9 +327,11 @@ async function main() {
   const slideCount = await page.$$eval(".slide", (slides) => slides.length).catch(() => 0);
   const issues = await collectOverflowIssues(page);
   const contentVisibilityIssues = await collectContentVisibilityIssues(page);
-  const pdfPath = path.join(outDir, `${path.basename(htmlPath, path.extname(htmlPath))}.pdf`);
+  const baseName = path.basename(htmlPath, path.extname(htmlPath));
+  const pdfPath = path.join(outDir, `${baseName}.pdf`);
+  const vectorPdfPath = path.join(outDir, `${baseName}-vector.pdf`);
   await page.pdf({
-    path: pdfPath,
+    path: vectorPdfPath,
     width: `${DEFAULT_VIEWPORT.width}px`,
     height: `${DEFAULT_VIEWPORT.height}px`,
     printBackground: true,
@@ -353,16 +355,14 @@ async function main() {
   const montagePath = path.join(outDir, "montage.png");
   await makeMontage(imagePaths, montagePath);
   const imageContentIssues = await collectImageContentIssues(imagePaths);
-  const imagePdfPath = path.join(
-    outDir,
-    `${path.basename(htmlPath, path.extname(htmlPath))}-image.pdf`
-  );
-  await makeImagePdf(imagePaths, imagePdfPath, DEFAULT_VIEWPORT);
+  await makeImagePdf(imagePaths, pdfPath, DEFAULT_VIEWPORT);
 
   const qa = {
     source_html: htmlPath,
     output_pdf: pdfPath,
-    output_image_pdf: imagePdfPath,
+    output_vector_pdf: vectorPdfPath,
+    pdf_strategy:
+      "default output_pdf is image-safe PDF built from verified screenshots; vector PDF is auxiliary",
     montage: montagePath,
     slides: slideCount || 1,
     viewport: DEFAULT_VIEWPORT,
@@ -383,7 +383,7 @@ async function main() {
     JSON.stringify(
       {
         pdfPath,
-        imagePdfPath,
+        vectorPdfPath,
         qaPath,
         montagePath,
         overflow_issues: issues.length,
