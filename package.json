@@ -1,0 +1,30 @@
+{
+  "name": "html-pdf-deck-pipeline-private",
+  "version": "0.1.0",
+  "description": "Local HTML/CSS to fixed-layout PDF deck pipeline with screenshot QA and CJK-safe image PDF output.",
+  "main": "scripts/render-report.js",
+  "private": true,
+  "scripts": {
+    "render": "node scripts/render-report.js",
+    "audit:pptx": "node scripts/audit-pptx.js",
+    "smoke": "node scripts/render-report.js examples/smoke-report.html outputs/smoke",
+    "smoke:cjk": "node scripts/render-report.js examples/cjk-smoke-report.html outputs/cjk-smoke"
+  },
+  "keywords": [
+    "html",
+    "pdf",
+    "presentation",
+    "deck",
+    "playwright",
+    "cjk"
+  ],
+  "author": "61X-Studio",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.60.0",
+    "sharp": "^0.35.0"
+  }
+}
