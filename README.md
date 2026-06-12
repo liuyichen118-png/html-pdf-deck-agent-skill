@@ -4,7 +4,7 @@ An Agent Skill for creating polished fixed-layout HTML/CSS presentation decks an
 
 It is designed for customer-facing reports, proposal decks, requirements-confirmation decks, diagnostic reports, and PDF-first slide deliverables where the final file must look exactly right.
 
-[中文说明](README.zh-CN.md) | [Project positioning](docs/PROJECT_POSITIONING.md) | [CJK PDF safety](docs/CJK_PDF_SAFETY.md)
+[中文说明](README.zh-CN.md) | [Compatibility](docs/COMPATIBILITY.md) | [Project positioning](docs/PROJECT_POSITIONING.md) | [CJK PDF safety](docs/CJK_PDF_SAFETY.md)
 
 > Status: private release candidate. Public release still requires owner approval and a license decision.
 
@@ -64,6 +64,16 @@ references/design-styles.md
 examples/
 assets/
 ```
+
+## Compatibility
+
+This project is built for Codex first, but it is not Codex-only.
+
+It should be portable to other `SKILL.md`-compatible agents, and adaptable to platforms that support Skills, plugins, workflows, or local tool execution.
+
+See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for the current compatibility matrix, including Codex, Claude, OpenClaw, Hermes Agent, VS Code Copilot Agent Skills, Tencent CodeBuddy/WorkBuddy, Coze, and other agents.
+
+Platforms not listed there are not excluded; they are simply not tested yet.
 
 ## Commands
 

@@ -58,6 +58,20 @@ npm install
 Use $html-pdf-deck to create a polished PDF-first deck from HTML/CSS and verify the exported PDF.
 ```
 
+## 平台兼容性
+
+这个项目优先适配 Codex，但不是 Codex-only。
+
+它的核心是通用的 `SKILL.md` + `scripts/` + `references/` + `assets/` 结构，因此理论上可以被其他兼容 `SKILL.md` 的智能体复用，也可以适配到支持 Skill、插件、工作流或本地工具执行的平台。
+
+当前兼容性矩阵见：
+
+[docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)
+
+其中包括 Codex、Claude、OpenClaw、Hermes Agent、VS Code Copilot Agent Skills、腾讯 CodeBuddy/WorkBuddy、扣子 Coze 等平台的适配状态。
+
+没有写进去的平台不代表不能使用，只是目前没有完成验证。
+
 ## 常用命令
 
 ```bash

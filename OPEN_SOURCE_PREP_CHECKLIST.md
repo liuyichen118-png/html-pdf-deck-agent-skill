@@ -25,6 +25,7 @@ Status: private draft. Do not publish until every required item is resolved and 
 - [x] Add English primary README.
 - [x] Add Chinese README: `README.zh-CN.md`.
 - [x] Add project positioning and naming document: `docs/PROJECT_POSITIONING.md`.
+- [x] Add compatibility matrix: `docs/COMPATIBILITY.md`.
 
 ### 3. Real Usage Documentation
 
