@@ -217,7 +217,7 @@ async function collectImageContentIssues(imagePaths) {
       stats.channels.reduce((sum, channel) => sum + (channel.stdev || 0), 0) /
       Math.max(stats.channels.length, 1);
 
-    if (entropy < 1.5 || stdevAvg < 6) {
+    if (entropy < 1.5 && stdevAvg < 6) {
       issues.push({
         slide: i + 1,
         type: "low_image_variation",

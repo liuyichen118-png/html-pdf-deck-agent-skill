@@ -15,6 +15,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: npm run validate:skill
       - run: npm audit --audit-level=high
       - run: npx playwright install --with-deps chromium
       - run: npm run smoke

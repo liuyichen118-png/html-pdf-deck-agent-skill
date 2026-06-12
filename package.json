@@ -1,16 +1,22 @@
 {
-  "name": "html-pdf-deck-pipeline-private",
+  "name": "html-pdf-deck-agent-skill",
   "version": "0.1.0",
-  "description": "Local HTML/CSS to fixed-layout PDF deck pipeline with screenshot QA and CJK-safe image PDF output.",
+  "description": "Agent skill for polished HTML/CSS decks with CJK-safe PDF export and screenshot QA.",
   "main": "scripts/render-report.js",
   "private": true,
   "scripts": {
     "render": "node scripts/render-report.js",
+    "validate:skill": "node scripts/validate-skill.js",
     "audit:pptx": "node scripts/audit-pptx.js",
     "smoke": "node scripts/render-report.js examples/smoke-report.html outputs/smoke",
-    "smoke:cjk": "node scripts/render-report.js examples/cjk-smoke-report.html outputs/cjk-smoke"
+    "smoke:cjk": "node scripts/render-report.js examples/cjk-smoke-report.html outputs/cjk-smoke",
+    "demo:executive": "node scripts/render-report.js examples/executive-brief.html outputs/demo-executive",
+    "demo:editorial": "node scripts/render-report.js examples/editorial-report.html outputs/demo-editorial",
+    "demo:operations": "node scripts/render-report.js examples/operations-dashboard.html outputs/demo-operations",
+    "demo:all": "npm run demo:executive && npm run demo:editorial && npm run demo:operations"
   },
   "keywords": [
+    "agent-skill",
     "html",
     "pdf",
     "presentation",

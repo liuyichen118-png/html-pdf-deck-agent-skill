@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Executive Brief Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #eef3f1;
+      color: #102126;
+      font-family: "Inter", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .slide {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      padding: 58px 70px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fbfcf9 0%, #edf6f2 100%);
+    }
+    .eyebrow {
+      color: #007a68;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 24px 0 22px;
+      width: 780px;
+      font-size: 48px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .lead {
+      width: 760px;
+      margin: 0;
+      color: #50636a;
+      font-size: 21px;
+      line-height: 1.5;
+    }
+    .signal {
+      position: absolute;
+      right: 70px;
+      top: 86px;
+      width: 305px;
+      padding: 24px;
+      border: 1px solid #c9dcda;
+      border-radius: 8px;
+      background: rgba(255,255,255,.76);
+    }
+    .signal b { display: block; font-size: 54px; letter-spacing: 0; }
+    .signal span { color: #66777c; font-size: 16px; line-height: 1.45; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 58px;
+    }
+    .card {
+      min-height: 170px;
+      padding: 22px;
+      border: 1px solid #d6e3e1;
+      border-radius: 8px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 16px 34px rgba(26,54,52,.08);
+    }
+    .card strong { display: block; margin-bottom: 14px; font-size: 22px; }
+    .card p { margin: 0; color: #5b6c72; font-size: 17px; line-height: 1.5; }
+    .footer {
+      position: absolute;
+      left: 70px;
+      right: 70px;
+      bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      color: #91a09f;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <section class="slide">
+    <div class="eyebrow">Executive Brief</div>
+    <h1>AI workflow launch plan for a focused first release</h1>
+    <p class="lead">A PDF-first deck style for strategy, proposal, and requirements-confirmation documents where clarity matters more than decoration.</p>
+    <div class="signal"><b>42%</b><span>Estimated manual review time removed after the first workflow reaches steady use.</span></div>
+    <div class="grid">
+      <div class="card"><strong>Primary decision</strong><p>Start with one high-frequency workflow, prove adoption, then expand the system boundary.</p></div>
+      <div class="card"><strong>Phase 1 scope</strong><p>Intake, classification, draft response, review handoff, and basic reporting.</p></div>
+      <div class="card"><strong>Risk control</strong><p>Human approval remains mandatory for sensitive external actions and paid operations.</p></div>
+    </div>
+    <div class="footer"><span>HTML PDF Deck Skill</span><span>01 / 01</span></div>
+  </section>
+</body>
+</html>

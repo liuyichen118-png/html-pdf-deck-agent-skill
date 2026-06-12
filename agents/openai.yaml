@@ -1,0 +1,7 @@
+interface:
+  display_name: "HTML PDF Deck"
+  short_description: "Build polished CJK-safe PDF decks from HTML/CSS"
+  brand_color: "#007A78"
+  default_prompt: "Use $html-pdf-deck to create a polished visual PDF deck from HTML/CSS and verify the final exported PDF."
+policy:
+  allow_implicit_invocation: true
