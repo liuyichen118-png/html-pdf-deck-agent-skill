@@ -29,3 +29,4 @@ This package is not approved for public release yet.
 - Add a clearer CLI API for viewport, footer, selectors, and output mode.
 - Run private path and brand scan before any public release.
 - Create GitHub private repo first; public visibility only after final approval.
+- Complete `OPEN_SOURCE_PREP_CHECKLIST.md` before changing visibility to public.
